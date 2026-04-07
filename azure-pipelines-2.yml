@@ -1,0 +1,18 @@
+# Maven Build Task
+trigger:
+  - main  # Trigger on the main branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image for running the pipeline
+
+steps:
+  - task: Maven@4  # Use Maven@3 task
+    inputs:
+      mavenPomFile: 'pom.xml'  # Specify the path to the pom.xml
+      mavenOptions: '-Xmx3072m'  # Optional: Set the memory for the Maven build
+      javaHomeOption: 'JDKVersion'  # Specify the JDK version option
+      jdkVersionOption: '1.11'  # Set JDK version to 11 (if using JDK 11)
+      jdkArchitectureOption: 'x64'  # Architecture option for x64
+      publishJUnitResults: true  # Publish JUnit results
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'  # Path to test results
+      goals: 'package'  # Maven goal, typically 'package' for packaging your project
